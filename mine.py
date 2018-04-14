@@ -1,46 +1,32 @@
-from threading import Thread
-import random,sys,os
-c=[]
-def getMoneyLook(n):
-    i=str(n)
-    try:
-        j=i.index(".")
-        i=i[:i.index(".")+7]
-    except:
-        i+=".000000"
-        j=-1
-    if j==-1:
-        return i
-    else:
-        i+="0"*(6-((len(i)-1)-j))
-    return i;
+from threading import Thread # for multi threading, in theory, more Rimcoin
+import random,sys,os # random tokens, get arguments, os module for system
+c=[] # list of strings (for submissions)
 def rcm(i):
-    j=0
-    k=0
+    j=0 # loop counter
+    k=0 # rimcoin
     while j<(i**0.01):
         try:
-            k+=int(j%int(j**0.5))
-        except:
+            k+=int(j%int(j**0.5)) # algorithm
+        except: 
             pass
         j+=1
-    return (k%2**16)==0;
+    return (k%2**16)==0; # true if Rimcoin
+
 def mine():
-    global c
-    j=0
-    mn=0
+    global c # ensure it can modify list of strings 
+    mn=0 # amount of money
     while True:
         try:
-            go=random.randint(10**5,(10**6)-1)
-            if rcm(go):
-                c.append(str(go))
+            go=random.randint(10**5,(10**6)-1) # algorithm number
+            if rcm(go): # if rimcoim
+                c.append(str(go)) # add to list of strings, as a string
                 mn+=1
         except:
             pass
-        j+=1
-        if mn%256==0:
-            os.system("curl http://rimcoin.pythonanywhere.com/sub:"+sys.argv[1]+":"+"/".join(c)+" &")
-            c=[]
-threads=4
+        if mn%256==0: # if we've gotten 0.000256 Rimcoin, run following code
+            os.system("curl http://rimcoin.pythonanywhere.com/sub:"+sys.argv[1]+":"+"/".join(c)+" &") # submits Rimcoin
+            c=[] # clear list
+threads=4 # number of threads
 while threads>=0:
-    Thread(target=mine).start()
+    Thread(target=mine).start() # start thread
     threads-=1
