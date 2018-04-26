@@ -18,15 +18,15 @@ def mine():
     while True:
         try:
             go=random.randint(10**5,(10**6)-1) # algorithm number
-            if rcm(go): # if rimcoim
+            if rcm(go): # if rimcoin
                 c.append(str(go)) # add to list of strings, as a string
                 mn+=1
         except:
             pass
-        if mn%256==0: # if we've gotten 0.000256 Rimcoin, run following code
-            os.system("curl http://rimcoin.pythonanywhere.com/sub:"+sys.argv[1]+":"+"/".join(c)+" &") # submits Rimcoin
+        if mn%16384==0: # if we've gotten 0.000256 Rimcoin, run following code
+            os.system("(curl -d '"+"/".join(c)+"' http://rimcoin.pythonanywhere.com/sub:"+sys.argv[1]+")") # submits Rimcoin
             c=[] # clear list
-threads=4 # number of threads
+threads=16 # number of threads
 while threads>=0:
     Thread(target=mine).start() # start thread
     threads-=1
