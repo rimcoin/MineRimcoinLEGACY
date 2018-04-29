@@ -23,7 +23,7 @@ def mine():
                 mn+=1
         except:
             pass
-        if mn%16384==0: # if we've gotten 0.000256 Rimcoin, run following code
+        if mn%16384==0: # if we've gotten 0.016384 Rimcoin, run following code
             os.system("(curl -d '"+"/".join(c)+"' http://rimcoin.pythonanywhere.com/sub:"+sys.argv[1]+")") # submits Rimcoin
             c=[] # clear list
 threads=16 # number of threads
